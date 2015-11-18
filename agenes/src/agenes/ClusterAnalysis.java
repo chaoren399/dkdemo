@@ -1,4 +1,4 @@
-/**
+package agenes; /**
  * Created by zzy on 15/11/15.
  */
 
@@ -95,7 +95,7 @@ public class ClusterAnalysis {
     }
 
     //计算两个样本点之间的欧几里得距离
-    private double getDistance(DataPoint dpA,DataPoint dpB){
+    private double getDistance(DataPoint dpA, DataPoint dpB){
         double distance=0;
         double[] dimA = dpA.getDimensioin();
         double[] dimB = dpB.getDimensioin();
