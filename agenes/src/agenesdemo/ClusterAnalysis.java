@@ -1,5 +1,6 @@
 package agenesdemo;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,26 +99,55 @@ public class ClusterAnalysis {
 
 
     public static  void main(String[] args){
+
+
         ArrayList<Route>routes = new ArrayList<Route>();
-        Route route1 = new Route("东海路与燕儿岛路路口 山东路海泊桥 山东路与抚顺路路口 辽阳西路与劲松四路路口 重庆中路与振华路路口");
-        Route route2 = new Route("青岛东收费站 夏庄主站收费站 S217朱诸路-张应大朱戈 胶宁高架路三百惠桥上");
-        Route route3 = new Route("青兰高速（双埠-管家楼）K23+800桩号增大方向");
-        Route route4 = new Route("山东路");
-        Route route5 = new Route("青岛路");
-        Route route6 = new Route("山东路海泊桥");
-        Route route7 = new Route("山东路与鞍山路路口");
-        Route route8 = new Route("宁夏路与福州南路路口");
+//        Route route1 = new Route("青岛东收费站 夏庄主站收费站 S217朱诸路-张应大朱戈 胶宁高架路三百惠桥上");
+//        Route route2 = new Route("青岛东收费站 夏庄主站收费站 东海路与燕儿岛路路口 山东路海泊桥 山东路与抚顺路路口 辽阳西路与劲松四路路口 重庆中路与振华路路口");
+//        Route route3 = new Route("昆仑山路与香江路路路口南200米 S218三城线与郭庄中学路口 环岛路唐岛湾2号门 胶宁高架路三百惠桥上 ");
+//        Route route4 = new Route("杭鞍快速路胶州湾端 杭鞍快速路胶州湾端 杭鞍快速路胶州湾端 胶州湾隧道ZK7+296电警 香港中路与燕儿岛路路口");
+//        Route route5 = new Route("杭鞍快速路胶州湾端 东海路与燕儿岛路路口 宁夏路与隆德路路口 东海中路与台湾路路口 山东路海泊桥 南京路与闽江路路口");
+//        Route route6 = new Route("贵州路与汶上路路口 江西路与燕儿岛路路口 江西路与徐州路路口 江西路与延安三路路口");
+//        Route route7 = new Route("华阳路与昌乐路路口 威海路与长春路路口 沈阳路与华阳路路口 山东路与延吉路路口 辽阳西路与劲松四路路口");
+//        Route route8 = new Route("华阳路与昌乐路路口 威海路与长春路路口 沈阳路与华阳路路口 山东路与延吉路路口 辽阳西路与劲松四路路口");
+//
+//        routes.add(route1);
+//        routes.add(route2);
+//        routes.add(route3);
+//        routes.add(route4);
+//        routes.add(route5);
+//        routes.add(route6);
+//        routes.add(route7);
+//        routes.add(route8);
 
-        routes.add(route1);
-        routes.add(route2);
-        routes.add(route3);
-        routes.add(route4);
-        routes.add(route5);
-        routes.add(route6);
-        routes.add(route7);
-        routes.add(route8);
 
-        int clusterNum = 3;// 类簇数
+        File file = new File("resource/A00000.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String tempString  = null;
+            int line = 1;
+            while((tempString = reader.readLine()) != null){
+                String[]  lines = tempString.split(",");
+                if (lines.length == 20){
+                Route route = new Route();
+                route.carnumber = lines[3];
+                route.routename = lines[4];
+                    System.out.println("line"+lines[3]);
+                routes.add(route);
+
+                }
+
+
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int clusterNum = 4;// 类簇数
         ClusterAnalysis ca = new ClusterAnalysis();
         List<Cluster> clusters = ca.startAnalysis(routes,clusterNum);
         for (Cluster cl : clusters){

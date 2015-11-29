@@ -5,19 +5,18 @@ package agenes;
  */
 
 
-
 public class DataPoint {
     String dataPointName; // 样本点名
     Cluster cluster; // 样本点所属类簇
     private double dimensioin[]; // 样本点的维度
 
-    public DataPoint(){
+    public DataPoint() {
 
     }
 
-    public DataPoint(double[] dimensioin, String dataPointName){
-        this.dataPointName=dataPointName;
-        this.dimensioin=dimensioin;
+    public DataPoint(double[] dimensioin, String dataPointName) {
+        this.dataPointName = dataPointName;
+        this.dimensioin = dimensioin;
     }
 
     public double[] getDimensioin() {

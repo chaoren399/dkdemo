@@ -64,10 +64,10 @@ public class Kmeans {
             for (int i = 0; i < k; i++){
                 Route route_new = findNewCenter (results[i]);
                 Route route_old = initRoutes.get(i);
-                if (!IsPlayerEqual(route_new, route_old)){
-                    centerchange = true;
-                    initRoutes.set(i, route_new);// 更新聚簇中心点
-                }
+//                if (!IsPlayerEqual(route_new, route_old)){
+//                    centerchange = true;
+//                    initRoutes.set(i, route_new);// 更新聚簇中心点
+//                }
             }
         }
 
@@ -88,7 +88,7 @@ public class Kmeans {
         for ( Route route : ps){
             // 遍历簇中得每个对象,计算相似度,求平均值.
 
-            LevenshteinDistance.sim()
+//            LevenshteinDistance.sim()
 
 
         }

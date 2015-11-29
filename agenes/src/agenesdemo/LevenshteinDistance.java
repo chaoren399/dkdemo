@@ -80,6 +80,8 @@ public class LevenshteinDistance {
 //		if(ld < strMax){
 //			sim = 1-ld/Math.min(str1.length(), str2.length());
 //		}
+
+		System.out.println(initR.routename +"-------与-------" +r.routename +"的相似度=" + sim);
 		return sim;
 	}
 	

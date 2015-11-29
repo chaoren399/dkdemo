@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="trafficroute">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TestApi/lib/trafficroute.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
