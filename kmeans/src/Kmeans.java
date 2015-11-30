@@ -1,138 +1,292 @@
-/**
- * Created by zzy on 15/11/15.
- */
-
-import java.util.List;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * 
+ * @author 阿飞哥
+ * 
+ */
+public class Kmeans<T> {
 
-public class Kmeans {
-    private List<Route> routes = new ArrayList<Route>();
-    /*
-     * 初始化列表
-     */
-    private List<Route>  initRoutes;
-    /*
-     * 分类数
-     */
-    private int k = 1;
+	/**
+	 * 所有数据列表
+	 */
+	private List<T> players = new ArrayList<T>();
 
-    public Kmeans(){
+	/**
+	 * 数据类别
+	 */
+	private Class<T> classT;
 
-    }
+	/**
+	 * 初始化列表
+	 */
+	private List<T> initPlayers;
 
-    /*
-     * 初始化列表
-     */
-    public Kmeans(List<Route> list,int k ){
-        this.routes = list;
-        this.k = k;
-        Route r = list.get(0);
+	/**
+	 * 需要纳入kmeans算法的属性名称
+	 */
+	private List<String> fieldNames = new ArrayList<String>();
 
-        initRoutes = new ArrayList<Route>();
-        for(int i = 0; i< k ; i++){
-            initRoutes.add(routes.get(i));
-        }
+	/**
+	 * 分类数
+	 */
+	private int k = 1;
 
-    }
+	public Kmeans() {
 
-    public List <Route>[] comput() {
-        List <Route>[] results = new  ArrayList[k];
-        boolean centerchange = true;
-        while (centerchange){
-            centerchange = false;
-            for (int i = 0; i < k; i++){
-                results[i] = new ArrayList<Route>();
-            }
-            for (int i = 0; i < routes.size(); i++){
-                Route r = routes.get(i);
-                double [] dists = new double [k];
-                for (int j = 0; j < initRoutes.size(); j++){
-                    Route initR = initRoutes.get(j);
-					/*
-					 * 计算距离
-					 * 所有点与 中心点计算距离
-					 */
-                    double dist = distance (initR, r);
-                    dists[j] = dist;
+	}
 
-                } // for j
+	/**
+	 * 初始化列表
+	 * 
+	 * @param list
+	 * @param k
+	 */
+	public Kmeans(List<T> list, int k) {
+		this.players = list;
+		this.k = k;
+		T t = list.get(0);
+		this.classT = (Class<T>) t.getClass();
+		Field[] fields = this.classT.getDeclaredFields();
+		System.out.println("fields---------------------------------------------="+fields.length);
+		for (int i = 0; i < fields.length; i++) {
+			Annotation kmeansAnnotation = fields[i]
+					.getAnnotation(KmeanField.class);
+			if (kmeansAnnotation != null) {
+				fieldNames.add(fields[i].getName());
+				System.out.println("fieldNames.add"+ fields[i].getName());
+				
+			}
 
-                int dist_index = computOrder(dists);
-                results[dist_index].add(r); // 将样本点放到对应的簇中
-            }// for i
-            for (int i = 0; i < k; i++){
-                Route route_new = findNewCenter (results[i]);
-                Route route_old = initRoutes.get(i);
-//                if (!IsPlayerEqual(route_new, route_old)){
-//                    centerchange = true;
-//                    initRoutes.set(i, route_new);// 更新聚簇中心点
-//                }
-            }
-        }
+		}
 
-        return  results;
-    }
-    /**
-     * 得到新聚类中心对象
-     * @param ps
-     * @return
-     */
-    private Route findNewCenter(List<Route> ps) {
+		initPlayers = new ArrayList<T>();
+		for (int i = 0; i < k; i++) {
+			initPlayers.add(players.get(i));
+		}
+	}
 
-        Route r = new Route();
-        if (ps == null || ps.size() == 0){
-            return r;
-        }
-        double ds ;
-        for ( Route route : ps){
-            // 遍历簇中得每个对象,计算相似度,求平均值.
+	public List<T>[] comput() {
+		List<T>[] results = new ArrayList[k];
 
-//            LevenshteinDistance.sim()
+		boolean centerchange = true;
+		while (centerchange) {
+			centerchange = false;
+			for (int i = 0; i < k; i++) {
+				results[i] = new ArrayList<T>();
+			}
+			for (int i = 0; i < players.size(); i++) {
+				T p = players.get(i);
+				double[] dists = new double[k];
+				for (int j = 0; j < initPlayers.size(); j++) {
+					T initP = initPlayers.get(j);
+					/* 计算距离 */
+					double dist = distance(initP, p);
+//					double dist = 1.0;
+//					double dist = LevenshteinDistance.levenshteinDistance(initP, p);
+//					System.out.println("dist="+dist);
+				
+					dists[j] = dist;
+				}
 
+				int dist_index = computOrder(dists);
+//				System.out.println("dist_index="+dist_index);
+				results[dist_index].add(p);
+			}
+			
+//			System.out.println("results[0].size()="+results[0].size());
 
-        }
-        return null;
-    }
+			for (int i = 0; i < k; i++) { // 在每一个簇中寻找中心点
+				T player_new = findNewCenter(results[i]);
+//				System.out.println( "results[i]"+i+"----"+k+"---===="+results[i].size() +"===="+player_new.toString());
+				T player_old = initPlayers.get(i);
+				if (!IsPlayerEqual(player_new, player_old)) {
+					centerchange = true;
+					initPlayers.set(i, player_new);
+				}
+			}
+		}
+//		System.out.println( "results+"+results.length);
+		return results;
+	}
 
-    /**
-     * 生成 索引,
-     * @param dists
-     * @return
-     */
+	/**
+	 * 比较是否两个对象是否属性一致
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	public boolean IsPlayerEqual(T p1, T p2) {
+		if (p1 == p2) {
+			return true;
+		}
+		if (p1 == null || p2 == null) {
+			return false;
+		}
 
-    private int computOrder(double[] dists) {
-        // TODO Auto-generated method stub
-        double min = 0;
-        int index = 0;
-        for (int i = 0; i<dists.length -1; i++){
-            double dist0 = dists[i];
-            if (i == 0){
-                min = dist0;
-                index = 0;
-            }
-            double dist1 = dists[i + 1];
-            if (min > dist1){
-                min = dist1;
-                index = i +1;
-            }
-        }
-        return index;
-    }
+		
 
-    /**
-     * 计算距离
-     * @param initR
-     * @param r
-     * @return
-     */
-    private double distance(Route initR, Route r) {
-        // TODO Auto-generated method stub
+		boolean flag = true;
+		try {
+			for (int i = 0; i < fieldNames.size(); i++) {
+				
+				String fieldName=fieldNames.get(i);
+				String getName = "get"
+						+ fieldName.substring(0, 1).toUpperCase()
+						+ fieldName.substring(1);		
+//				System.out.println(fieldNames);
+				Object value1 = invokeMethod(p1,getName,null);
+				Object value2 = invokeMethod(p2,getName,null);
+				if (!value1.equals(value2)) {
+					flag = false;
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		}
 
-        return LevenshteinDistance.sim(initR,r);
-    }
+		return flag;
+	}
 
+	/**
+	 * 得到新聚类中心对象
+	 * 
+	 * @param ps
+	 * @return
+	 */
+	public T findNewCenter(List<T> ps) {
+		try {
+			T t = classT.newInstance();
+			if (ps == null || ps.size() == 0) {
+				return t;
+			}
 
+			double[] ds = new double[fieldNames.size()];
+			for (T vo : ps) {
+				for (int i = 0; i < fieldNames.size(); i++) {
+					String fieldName=fieldNames.get(i);
+					String getName = "get"
+							+ fieldName.substring(0, 1).toUpperCase()
+							+ fieldName.substring(1);
+					Object obj=invokeMethod(vo,getName,null);
+					Double fv=(obj==null?0:Double.parseDouble(obj+""));
+					ds[i] += fv;
+				}
+
+			}
+			
+//			System.out.println("-----------------");
+			for (int i = 0; i < fieldNames.size(); i++) {
+				ds[i] = ds[i] / ps.size();    // 平均距离
+				String fieldName = fieldNames.get(i);
+				
+				/* 给对象设值 */
+				String setName = "set"
+						+ fieldName.substring(0, 1).toUpperCase()
+						+ fieldName.substring(1);
+
+//				invokeMethod(t,setName,new Class[]{double.class},ds[i]);
+				System.out.println("ds[i] ++="+ds[i]+"----ps.size()"+ps.size());
+				invokeMethod(t,setName,new Class[]{double.class},ds[i]);
+
+			}
+			
+			
+			
+			return t;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 * 得到最短距离，并返回最短距离索引
+	 * 
+	 * @param dists
+	 * @return
+	 */
+	public int computOrder(double[] dists) {
+		double min = 0;
+		int index = 0;
+		for (int i = 0; i < dists.length - 1; i++) {
+			double dist0 = dists[i];
+			if (i == 0) {
+				min = dist0;
+				index = 0;
+			}
+			double dist1 = dists[i + 1];
+			if (min > dist1) {
+				min = dist1;
+				index = i + 1;
+			}
+		}
+
+		return index;
+	}
+
+	/**
+	 * 计算距离（相似性） 采用欧几里得算法
+	 * 
+	 * @param p0
+	 * @param p1
+	 * @return
+	 */
+	public double distance(T p0, T p1) {
+		double dis = 0;
+		try {
+
+			for (int i = 0; i < fieldNames.size(); i++) {
+				String fieldName = fieldNames.get(i);
+				String getName = "get"
+						+ fieldName.substring(0, 1).toUpperCase()
+						+ fieldName.substring(1);
+				
+//				System.out.println("fieldNames-----="+fieldNames.size());
+				Double field0Value=Double.parseDouble(invokeMethod(p0,getName,null)+"");
+				Double field1Value=Double.parseDouble(invokeMethod(p1,getName,null)+"");
+//				System.out.println("field0Value="+field0Value);
+				dis += Math.pow(field0Value - field1Value, 2); 
+				
+
+				
+				
+			}
+		
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return Math.sqrt(dis);
+
+	}
+	
+	/*------公共方法-----*/
+	public Object invokeMethod(Object owner, String methodName,Class[] argsClass,
+			Object... args) {
+		Class ownerClass = owner.getClass();
+		
+		try {
+			Method method=ownerClass.getDeclaredMethod(methodName,argsClass);
+			
+			return method.invoke(owner, args);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
 
 }
 
