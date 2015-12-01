@@ -6,11 +6,15 @@
 
     <groupId>com.dk</groupId>
     <artifactId>mahout</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../mahout-kmeans-0.6</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mahout.version>0.9</mahout.version>
+        <mahout.version>0.8</mahout.version>
     </properties>
 
     <dependencies>
@@ -37,6 +41,8 @@
                     <artifactId>hector-core</artifactId>
                 </exclusion>
             </exclusions>
+
+
         </dependency>
 
 
@@ -47,13 +53,20 @@
             <version>2.6.0</version>
 
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
             <version>1.2.0</version>
         </dependency>
+<!-- method getUnknownFields.()Lcom/google/protobuf/UnknownFieldSet;
+	at java.lang.ClassLoader.defineClass1(Native Method)-->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+
 
 
     </dependencies>
