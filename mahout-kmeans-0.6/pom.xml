@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mahout</artifactId>
+        <groupId>com.dk</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../mahout-kmeans/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mahout-0.6</artifactId>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mahout.version>0.6</mahout.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-core</artifactId>
+            <version>${mahout.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-integration</artifactId>
+            <version>${mahout.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.cassandra</groupId>
+                    <artifactId>cassandra-all</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>me.prettyprint</groupId>
+                    <artifactId>hector-core</artifactId>
+                </exclusion>
+            </exclusions>
+
+
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>2.6.0</version>
+
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- method getUnknownFields.()Lcom/google/protobuf/UnknownFieldSet;
+            at java.lang.ClassLoader.defineClass1(Native Method)-->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+
+
+
+    </dependencies>
+
+
+
+</project>
