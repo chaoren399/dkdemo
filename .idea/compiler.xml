@@ -22,11 +22,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="elasticsearch" />
+        <module name="kafka" />
+        <module name="mahout-kmeans-0.6" />
         <module name="mr" />
         <module name="TestApi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="elasticsearch" target="1.5" />
+      <module name="kafka" target="1.5" />
+      <module name="mahout-kmeans" target="1.5" />
+      <module name="mahout-kmeans-0.6" target="1.5" />
       <module name="mr" target="1.5" />
       <module name="TestApi" target="1.5" />
     </bytecodeTargetLevel>

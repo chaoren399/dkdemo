@@ -1,0 +1,7 @@
+CarIdMr$CarImportReducer.class
+CarIdMr$BatchImportMapper.class
+CarMapreduce.class
+CarMapreduce$ImportHbaseMapper.class
+CarMapreduce$ReducerClass.class
+util/PropUtils.class
+CarIdMr.class

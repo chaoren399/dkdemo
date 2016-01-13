@@ -8,6 +8,9 @@
       <list>
         <option value="$PROJECT_DIR$/TestApi/pom.xml" />
         <option value="$PROJECT_DIR$/mr/pom.xml" />
+        <option value="$PROJECT_DIR$/mahout-kmeans/pom.xml" />
+        <option value="$PROJECT_DIR$/elasticsearch/pom.xml" />
+        <option value="$PROJECT_DIR$/kafka/pom.xml" />
       </list>
     </option>
   </component>

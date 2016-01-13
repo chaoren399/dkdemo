@@ -7,15 +7,15 @@
     <groupId>com.dk</groupId>
     <artifactId>traffic-mr</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <properties>
-        <localpath.dir>${basedir}</localpath.dir>
-        <remote.host>192.168.122.211</remote.host>
-        <remote.username>root</remote.username>
-        <remote.password>lg</remote.password>
-        <remote.home>/test</remote.home>
-        <!--<main.class>CarIdRoutesDriver</main.class>-->
-        <main.class>caridmr.CarIdDriver</main.class>
-    </properties>
+    <!--<properties>-->
+        <!--<localpath.dir>${basedir}</localpath.dir>-->
+        <!--<remote.host>192.168.122.211</remote.host>-->
+        <!--<remote.username>root</remote.username>-->
+        <!--<remote.password>lg</remote.password>-->
+        <!--<remote.home>/test</remote.home>-->
+        <!--&lt;!&ndash;<main.class>CarIdRoutesDriver</main.class>&ndash;&gt;-->
+        <!--<main.class>caridmr.CarIdDriver</main.class>-->
+    <!--</properties>-->
 
 
 

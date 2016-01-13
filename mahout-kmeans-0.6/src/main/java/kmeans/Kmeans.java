@@ -24,7 +24,7 @@ public class Kmeans {
         int k = 3;
         double threshold = 0.01;
 
-        List<Vector> randomPoints = MathUtil.chooseRandomPoints(sampleData,k);
+        List<Vector> randomPoints = MathUtil.chooseRandomPoints(sampleData,k);//初始化聚类中心
         for (Vector vector:randomPoints){
             System.out.println("Init Point center:"+vector);
 
@@ -33,6 +33,7 @@ public class Kmeans {
         for (int i = 0; i < k; i++) {
             clusters.add(new Cluster(randomPoints.get(i),i,new EuclideanDistanceMeasure()));
         }
+
 
         List<List<Cluster>> finalClusters = KMeansClusterer.clusterPoints(sampleData,clusters,new EuclideanDistanceMeasure(),k,threshold);
         for (Cluster cluster:finalClusters.get(finalClusters.size()-1)){

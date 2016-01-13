@@ -3,7 +3,7 @@
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/mr/build.xml">
       <additionalClassPath>
-        <entry path="file://$PROJECT_DIR$/../../../../../doc/workspace/other_workspace/jsch-0.1.51.jar" />
+        <entry path="file://$USER_HOME$/Kclouds/01_mac/doc/workspace/other_workspace/jsch-0.1.51.jar" />
       </additionalClassPath>
     </buildFile>
   </component>

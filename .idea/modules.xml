@@ -5,7 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/TestApi/TestApi.iml" filepath="$PROJECT_DIR$/TestApi/TestApi.iml" />
       <module fileurl="file://$PROJECT_DIR$/agenes/agnes.iml" filepath="$PROJECT_DIR$/agenes/agnes.iml" />
       <module fileurl="file://$PROJECT_DIR$/dkdemo.iml" filepath="$PROJECT_DIR$/dkdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/elasticsearch/elasticsearch.iml" filepath="$PROJECT_DIR$/elasticsearch/elasticsearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka/kafka.iml" filepath="$PROJECT_DIR$/kafka/kafka.iml" />
       <module fileurl="file://$PROJECT_DIR$/kmeans/kmeans.iml" filepath="$PROJECT_DIR$/kmeans/kmeans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mahout-kmeans/mahout-kmeans.iml" filepath="$PROJECT_DIR$/mahout-kmeans/mahout-kmeans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mahout-kmeans-0.6/mahout-kmeans-0.6.iml" filepath="$PROJECT_DIR$/mahout-kmeans-0.6/mahout-kmeans-0.6.iml" />
       <module fileurl="file://$PROJECT_DIR$/mr/mr.iml" filepath="$PROJECT_DIR$/mr/mr.iml" />
     </modules>
   </component>

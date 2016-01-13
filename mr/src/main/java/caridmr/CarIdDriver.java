@@ -19,6 +19,10 @@ import java.util.Properties;
 public class CarIdDriver extends Configured implements Tool {
     public int run(String[] args) throws Exception {
 
+//        if (args.length !=2){
+//            System.out.println("please check your input");
+//            return -1;
+//        }
         Properties prop = PropUtils.getProp("hbase.properties");//
         Configuration conf = new Configuration();
         conf.set("hbase.zookeeper.quorum", prop.getProperty("hbase.zookeeper.quorum1"));
@@ -35,12 +39,13 @@ public class CarIdDriver extends Configured implements Tool {
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
 
-        job.setNumReduceTasks(Integer.parseInt(args[1]));
+//        job.setNumReduceTasks(Integer.parseInt(args[1]));
 //  job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TableOutputFormat.class);
 
 //  FileInputFormat.setInputPaths(job, "hdfs://192.168.122.211:9000/user/hbase/dk/10.txt");
-        FileInputFormat.setInputPaths(job, args[0]);
+       String inputpath = "hdfs://123.56.231.34:9000/dk/10.txt";
+        FileInputFormat.setInputPaths(job, inputpath);
 
 
 

@@ -33,7 +33,7 @@ public class ClusterAnalysis {
                                 if(tempDis<min){
                                     min=tempDis;
                                     mergeIndexA=i;
-                                    mergeIndexB=j;
+                                    mergeIndexB=j; // 找出 距i 最近的一个点,合并
                                 }
                             }
                         }
